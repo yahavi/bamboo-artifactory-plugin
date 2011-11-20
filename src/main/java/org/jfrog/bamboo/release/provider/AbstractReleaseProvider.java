@@ -15,7 +15,7 @@ import org.jfrog.bamboo.context.Maven3BuildContext;
 import org.jfrog.bamboo.release.action.ModuleVersionHolder;
 import org.jfrog.bamboo.release.scm.AbstractScmCoordinator;
 import org.jfrog.bamboo.release.scm.ScmCoordinator;
-import org.jfrog.bamboo.util.version.ScmHelper;
+import org.jfrog.bamboo.util.ScmHelper;
 
 import java.io.File;
 import java.io.IOException;

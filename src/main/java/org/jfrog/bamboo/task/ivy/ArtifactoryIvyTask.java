@@ -1,4 +1,4 @@
-package org.jfrog.bamboo.task;
+package org.jfrog.bamboo.task.ivy;
 
 
 import com.atlassian.bamboo.build.ErrorLogEntry;
@@ -23,11 +23,11 @@ import org.apache.commons.lang.SystemUtils;
 import org.apache.log4j.Logger;
 import org.apache.tools.ant.types.Commandline;
 import org.jetbrains.annotations.NotNull;
-import org.jfrog.bamboo.builder.ArtifactoryBuildInfoPropertyHelper;
-import org.jfrog.bamboo.builder.BuilderDependencyHelper;
 import org.jfrog.bamboo.context.AbstractBuildContext;
 import org.jfrog.bamboo.context.IvyBuildContext;
-import org.jfrog.bamboo.util.IvyPropertyHelper;
+import org.jfrog.bamboo.task.ArtifactoryBuildInfoPropertyHelper;
+import org.jfrog.bamboo.task.ArtifactoryTaskType;
+import org.jfrog.bamboo.task.BuilderDependencyHelper;
 import org.jfrog.bamboo.util.PluginProperties;
 import org.jfrog.build.api.BuildInfoConfigProperties;
 

@@ -3,8 +3,8 @@ package org.jfrog.bamboo.util;
 import com.atlassian.bamboo.task.TaskDefinition;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.Nullable;
-import org.jfrog.bamboo.task.ArtifactoryGradleTask;
-import org.jfrog.bamboo.task.ArtifactoryMaven3Task;
+import org.jfrog.bamboo.task.gradle.ArtifactoryGradleTask;
+import org.jfrog.bamboo.task.maven.ArtifactoryMaven3Task;
 
 import java.util.List;
 

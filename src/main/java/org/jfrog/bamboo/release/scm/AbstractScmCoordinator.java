@@ -8,7 +8,7 @@ import com.google.common.collect.Maps;
 import org.apache.log4j.Logger;
 import org.jfrog.bamboo.release.scm.git.GitCoordinator;
 import org.jfrog.bamboo.release.scm.svn.SubversionCoordinator;
-import org.jfrog.bamboo.util.version.ScmHelper;
+import org.jfrog.bamboo.util.ScmHelper;
 
 import java.io.IOException;
 import java.util.Map;

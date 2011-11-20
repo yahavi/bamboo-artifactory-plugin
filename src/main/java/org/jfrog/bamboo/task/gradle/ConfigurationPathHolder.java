@@ -1,4 +1,4 @@
-package org.jfrog.bamboo.util;
+package org.jfrog.bamboo.task.gradle;
 
 /**
  * @author Tomer Cohen

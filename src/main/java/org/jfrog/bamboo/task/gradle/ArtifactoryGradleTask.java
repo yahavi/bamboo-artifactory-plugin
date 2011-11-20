@@ -1,4 +1,4 @@
-package org.jfrog.bamboo.task;
+package org.jfrog.bamboo.task.gradle;
 
 
 import com.atlassian.bamboo.build.ErrorLogEntry;
@@ -27,11 +27,10 @@ import org.apache.commons.lang.SystemUtils;
 import org.apache.log4j.Logger;
 import org.apache.tools.ant.types.Commandline;
 import org.jetbrains.annotations.NotNull;
-import org.jfrog.bamboo.builder.BuilderDependencyHelper;
-import org.jfrog.bamboo.builder.GradleInitScriptHelper;
 import org.jfrog.bamboo.context.AbstractBuildContext;
 import org.jfrog.bamboo.context.GradleBuildContext;
-import org.jfrog.bamboo.util.ConfigurationPathHolder;
+import org.jfrog.bamboo.task.ArtifactoryTaskType;
+import org.jfrog.bamboo.task.BuilderDependencyHelper;
 import org.jfrog.bamboo.util.PluginProperties;
 import org.jfrog.bamboo.util.TaskUtils;
 import org.jfrog.gradle.plugin.artifactory.extractor.BuildInfoTask;

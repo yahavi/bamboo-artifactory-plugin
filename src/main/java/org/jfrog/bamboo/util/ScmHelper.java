@@ -1,4 +1,4 @@
-package org.jfrog.bamboo.util.version;
+package org.jfrog.bamboo.util;
 
 import com.atlassian.bamboo.repository.Repository;
 import com.atlassian.bamboo.repository.RepositoryDefinition;
@@ -10,6 +10,8 @@ import java.io.File;
 import java.util.Iterator;
 
 /**
+ * Helper class for SCM provider and definition related operations
+ *
  * @author Noam Y. Tenne
  */
 public abstract class ScmHelper {

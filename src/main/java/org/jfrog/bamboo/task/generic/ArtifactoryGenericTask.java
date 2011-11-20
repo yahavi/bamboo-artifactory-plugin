@@ -1,4 +1,4 @@
-package org.jfrog.bamboo.task;
+package org.jfrog.bamboo.task.generic;
 
 import com.atlassian.bamboo.build.artifact.AbstractArtifactManager;
 import com.atlassian.bamboo.build.logger.BuildLogger;
@@ -28,9 +28,7 @@ import org.jfrog.bamboo.admin.ServerConfig;
 import org.jfrog.bamboo.admin.ServerConfigManager;
 import org.jfrog.bamboo.context.GenericContext;
 import org.jfrog.bamboo.util.BambooBuildInfoLog;
-import org.jfrog.bamboo.util.GenericBuildInfoHelper;
-import org.jfrog.bamboo.util.generic.PublishedItemsHelper;
-import org.jfrog.bamboo.util.version.ScmHelper;
+import org.jfrog.bamboo.util.ScmHelper;
 import org.jfrog.build.api.Build;
 import org.jfrog.build.api.util.FileChecksumCalculator;
 import org.jfrog.build.client.ArtifactoryBuildInfoClient;

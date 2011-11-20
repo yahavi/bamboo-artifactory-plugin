@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jfrog.bamboo.builder;
+package org.jfrog.bamboo.task;
 
 import com.atlassian.bamboo.configuration.AdministrationConfiguration;
 import com.atlassian.bamboo.configuration.AdministrationConfigurationManager;

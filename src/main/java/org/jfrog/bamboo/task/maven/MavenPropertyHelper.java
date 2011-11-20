@@ -1,10 +1,10 @@
-package org.jfrog.bamboo.util;
+package org.jfrog.bamboo.task.maven;
 
 import org.apache.commons.lang.StringUtils;
 import org.jfrog.bamboo.admin.ServerConfig;
-import org.jfrog.bamboo.builder.ArtifactoryBuildInfoPropertyHelper;
 import org.jfrog.bamboo.context.AbstractBuildContext;
 import org.jfrog.bamboo.context.Maven3BuildContext;
+import org.jfrog.bamboo.task.ArtifactoryBuildInfoPropertyHelper;
 import org.jfrog.build.client.ArtifactoryClientConfiguration;
 
 /**

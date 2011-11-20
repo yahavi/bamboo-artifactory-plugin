@@ -13,8 +13,8 @@ import com.atlassian.bamboo.v2.build.BuildContext;
 import com.atlassian.bamboo.v2.build.task.AbstractBuildTask;
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
+import org.jfrog.bamboo.util.ScmHelper;
 import org.jfrog.bamboo.util.TaskDefinitionHelper;
-import org.jfrog.bamboo.util.version.ScmHelper;
 
 import java.io.File;
 import java.util.List;
@@ -22,9 +22,9 @@ import java.util.List;
 /**
  * Copy the {@code gradle.properties} file to the artifacts folder of the build, this will be later used for detecting
  * the release properties and next integration properties. This applies only to {@link
- * org.jfrog.bamboo.task.ArtifactoryGradleTask} type builds. This is done since if a build is consistently built on a
- * remote agent, the server will may become out of date, and will continuously display incorrect properties and their
- * respective values.
+ * org.jfrog.bamboo.task.gradle.ArtifactoryGradleTask} type builds. This is done since if a build is consistently built
+ * on a remote agent, the server will may become out of date, and will continuously display incorrect properties and
+ * their respective values.
  *
  * @author Tomer Cohen
  */

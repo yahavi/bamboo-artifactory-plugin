@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Configuration for {@link org.jfrog.bamboo.task.ArtifactoryMaven3Task}
+ * Configuration for {@link org.jfrog.bamboo.task.maven.ArtifactoryMaven3Task}
  *
  * @author Tomer Cohen
  */

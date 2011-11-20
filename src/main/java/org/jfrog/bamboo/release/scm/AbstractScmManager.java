@@ -5,7 +5,7 @@ import com.atlassian.bamboo.repository.Repository;
 import com.atlassian.bamboo.v2.build.BuildContext;
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
-import org.jfrog.bamboo.util.version.ScmHelper;
+import org.jfrog.bamboo.util.ScmHelper;
 
 import java.io.File;
 

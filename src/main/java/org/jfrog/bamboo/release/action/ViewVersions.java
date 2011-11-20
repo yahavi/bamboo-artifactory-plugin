@@ -28,10 +28,10 @@ import org.apache.log4j.Logger;
 import org.jfrog.bamboo.admin.ServerConfigManager;
 import org.jfrog.bamboo.context.AbstractBuildContext;
 import org.jfrog.bamboo.context.Maven3BuildContext;
+import org.jfrog.bamboo.release.action.version.VersionHelper;
 import org.jfrog.bamboo.release.provider.ReleaseProvider;
 import org.jfrog.bamboo.util.ConstantValues;
 import org.jfrog.bamboo.util.TaskDefinitionHelper;
-import org.jfrog.bamboo.util.version.VersionHelper;
 
 import java.io.IOException;
 import java.util.Collections;

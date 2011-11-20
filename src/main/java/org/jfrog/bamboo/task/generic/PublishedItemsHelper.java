@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jfrog.bamboo.util.generic;
+package org.jfrog.bamboo.task.generic;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

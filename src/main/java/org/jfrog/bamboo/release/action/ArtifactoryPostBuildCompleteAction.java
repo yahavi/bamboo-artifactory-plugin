@@ -15,8 +15,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jfrog.bamboo.context.AbstractBuildContext;
 import org.jfrog.bamboo.release.provider.AbstractReleaseProvider;
 import org.jfrog.bamboo.release.provider.ReleaseProvider;
+import org.jfrog.bamboo.util.ScmHelper;
 import org.jfrog.bamboo.util.TaskDefinitionHelper;
-import org.jfrog.bamboo.util.version.ScmHelper;
 
 import java.util.List;
 import java.util.Map;

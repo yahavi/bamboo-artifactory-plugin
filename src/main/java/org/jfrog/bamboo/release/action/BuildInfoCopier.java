@@ -17,8 +17,8 @@ import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jfrog.bamboo.context.Maven3BuildContext;
+import org.jfrog.bamboo.util.ScmHelper;
 import org.jfrog.bamboo.util.TaskDefinitionHelper;
-import org.jfrog.bamboo.util.version.ScmHelper;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,7 +29,7 @@ import java.util.zip.GZIPOutputStream;
 
 /**
  * Copy the {@code build-info.json} file to the artifacts folder of the build, this will be later used for parsing the
- * modules for release management. This applies only to {@link org.jfrog.bamboo.task.ArtifactoryMaven3Task} type
+ * modules for release management. This applies only to {@link org.jfrog.bamboo.task.maven.ArtifactoryMaven3Task} type
  * builds.
  *
  * @author Tomer Cohen

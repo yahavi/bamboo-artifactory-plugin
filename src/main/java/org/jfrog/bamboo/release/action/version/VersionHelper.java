@@ -1,4 +1,4 @@
-package org.jfrog.bamboo.util.version;
+package org.jfrog.bamboo.release.action.version;
 
 import com.atlassian.bamboo.plan.Plan;
 import com.atlassian.bamboo.repository.RepositoryException;

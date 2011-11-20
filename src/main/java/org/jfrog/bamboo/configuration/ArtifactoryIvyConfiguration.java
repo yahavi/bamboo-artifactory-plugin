@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Configuration for {@link org.jfrog.bamboo.task.ArtifactoryIvyTask}
+ * Configuration for {@link org.jfrog.bamboo.task.ivy.ArtifactoryIvyTask}
  *
  * @author Tomer Cohen
  */

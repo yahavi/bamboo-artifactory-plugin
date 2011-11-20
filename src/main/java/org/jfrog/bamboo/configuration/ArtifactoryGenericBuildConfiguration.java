@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Configuration for {@link org.jfrog.bamboo.task.ArtifactoryGenericTask}
+ * Configuration for {@link org.jfrog.bamboo.task.generic.ArtifactoryGenericTask}
  *
  * @author Tomer Cohen
  */

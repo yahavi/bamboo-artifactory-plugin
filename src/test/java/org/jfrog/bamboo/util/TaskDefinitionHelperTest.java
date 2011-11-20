@@ -4,8 +4,8 @@ import com.atlassian.bamboo.task.TaskDefinition;
 import com.atlassian.bamboo.task.TaskDefinitionImpl;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.jfrog.bamboo.task.ArtifactoryGradleTask;
-import org.jfrog.bamboo.task.ArtifactoryMaven3Task;
+import org.jfrog.bamboo.task.gradle.ArtifactoryGradleTask;
+import org.jfrog.bamboo.task.maven.ArtifactoryMaven3Task;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;

@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Configuration for {@link org.jfrog.bamboo.task.ArtifactoryGradleTask}
+ * Configuration for {@link org.jfrog.bamboo.task.gradle.ArtifactoryGradleTask}
  *
  * @author Tomer Cohen
  */

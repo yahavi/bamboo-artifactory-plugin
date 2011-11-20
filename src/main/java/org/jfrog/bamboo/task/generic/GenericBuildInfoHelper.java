@@ -1,4 +1,4 @@
-package org.jfrog.bamboo.util;
+package org.jfrog.bamboo.task.generic;
 
 import com.atlassian.bamboo.util.BuildUtils;
 import com.atlassian.bamboo.utils.EscapeChars;
@@ -10,7 +10,8 @@ import com.google.common.collect.Lists;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.jfrog.bamboo.builder.BaseBuildInfoHelper;
+import org.jfrog.bamboo.task.BaseBuildInfoHelper;
+import org.jfrog.bamboo.util.TaskUtils;
 import org.jfrog.build.api.Artifact;
 import org.jfrog.build.api.Build;
 import org.jfrog.build.api.BuildAgent;
