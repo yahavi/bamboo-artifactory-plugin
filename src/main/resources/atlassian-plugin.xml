@@ -99,7 +99,7 @@
     </web-item>
 
     <taskType key="artifactoryGradleTask" name="Artifactory Gradle Task"
-              class="org.jfrog.bamboo.task.ArtifactoryGradleTask">
+              class="org.jfrog.bamboo.task.gradle.ArtifactoryGradleTask">
         <description>Artifactory Gradle task</description>
         <configuration class="org.jfrog.bamboo.configuration.ArtifactoryGradleConfiguration"/>
         <category name="builder"/>
@@ -111,7 +111,7 @@
 
 
     <taskType key="artifactoryIvyTask" name="Artifactory Ivy Task"
-              class="org.jfrog.bamboo.task.ArtifactoryIvyTask">
+              class="org.jfrog.bamboo.task.ivy.ArtifactoryIvyTask">
         <description>Artifactory Ivy task</description>
         <configuration class="org.jfrog.bamboo.configuration.ArtifactoryIvyConfiguration"/>
         <category name="builder"/>
@@ -122,7 +122,7 @@
     </taskType>
 
     <taskType key="maven3Task" name="Artifactory Maven 3 Task"
-              class="org.jfrog.bamboo.task.ArtifactoryMaven3Task">
+              class="org.jfrog.bamboo.task.maven.ArtifactoryMaven3Task">
         <description>Artifactory Maven 3 Task</description>
         <configuration class="org.jfrog.bamboo.configuration.ArtifactoryMaven3Configuration"/>
         <category name="builder"/>
@@ -234,13 +234,15 @@
     <!--Generic build action-->
 
     <taskType key="artifactoryGenericTask" name="Artifactory Generic Deploy Task"
-              class="org.jfrog.bamboo.task.ArtifactoryGenericTask">
+              class="org.jfrog.bamboo.task.generic.ArtifactoryGenericTask">
         <description>Artifactory Generic Deploy Task</description>
         <configuration class="org.jfrog.bamboo.configuration.ArtifactoryGenericBuildConfiguration"/>
         <category name="deployment"/>
         <executable key="generic"/>
-        <resource type="freemarker" name="edit" location="templates/plugins/generic/artifactoryGenericBuildActionEdit.ftl"/>
-        <resource type="freemarker" name="view" location="templates/plugins/generic/artifactoryGenericBuildActionView.ftl"/>
+        <resource type="freemarker" name="edit"
+                  location="templates/plugins/generic/artifactoryGenericBuildActionEdit.ftl"/>
+        <resource type="freemarker" name="view"
+                  location="templates/plugins/generic/artifactoryGenericBuildActionView.ftl"/>
     </taskType>
 
     <resource type="download" name="icon" location="images/artifactory-icon-small.png"/>
