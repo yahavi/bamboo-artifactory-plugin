@@ -151,8 +151,8 @@ public class ArtifactoryGradleTask extends ArtifactoryTaskType {
     }
 
     private ConfigurationPathHolder getGradleInitScriptFile(TaskContext taskContext, GradleBuildContext buildContext) {
-        File gradleJarFile = new File(gradleDependenciesDir, PluginProperties
-                .getPluginProperty(PluginProperties.GRADLE_DEPENDENCY_FILENAME_KEY));
+        File gradleJarFile = new File(gradleDependenciesDir, PluginProperties.getPropertyValue(
+                PluginProperties.GRADLE_DEPENDENCY_FILENAME_KEY));
         if (!gradleJarFile.exists()) {
             log.warn("Unable to locate the Gradle extractor. Build-info task will not be added.");
             return null;

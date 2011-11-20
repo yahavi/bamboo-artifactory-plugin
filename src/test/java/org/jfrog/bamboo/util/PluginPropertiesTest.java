@@ -5,8 +5,7 @@ import org.testng.annotations.Test;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.*;
 
 /**
  * @author Noam Y. Tenne
@@ -19,19 +18,21 @@ public class PluginPropertiesTest {
         assertEquals(PluginProperties.IVY_DEPENDENCY_FILENAME_KEY, "ivy.dependency.file.name");
         assertEquals(PluginProperties.MAVEN3_DEPENDENCY_FILENAME_KEY, "maven3.dependency.file.name");
 
+        assertNull(PluginProperties.getPropertyValue("momo"), "Unexpected response for non-existing property.");
+
         assertTrue(Pattern.compile("org.jfrog.bamboo.bamboo-artifactory-plugin-(?:.+)(?:-SNAPSHOT)?")
                 .matcher(PluginProperties.getPluginKey()).matches(),
                 "Plugin key value doesn't match the expected pattern.");
         assertEquals(PluginProperties.getPluginDescriptorKey(), "org.jfrog.bamboo.bamboo-artifactory-plugin",
                 "Plugin descriptor key value doesn't match the expected pattern.");
         assertTrue(Pattern.compile("build-info-extractor-gradle-(?:.+)(?:-SNAPSHOT)?-uber.jar")
-                .matcher(PluginProperties.getPluginProperty(PluginProperties.GRADLE_DEPENDENCY_FILENAME_KEY)).
+                .matcher(PluginProperties.getPropertyValue(PluginProperties.GRADLE_DEPENDENCY_FILENAME_KEY)).
                         matches(), "Gradle dependency filename doesn't match the expected pattern.");
         assertTrue(Pattern.compile("build-info-extractor-maven3-(?:.+)(?:-SNAPSHOT)?-uber.jar")
-                .matcher(PluginProperties.getPluginProperty(PluginProperties.MAVEN3_DEPENDENCY_FILENAME_KEY)).
+                .matcher(PluginProperties.getPropertyValue(PluginProperties.MAVEN3_DEPENDENCY_FILENAME_KEY)).
                         matches(), "Maven 3 dependency filename doesn't match the expected pattern.");
         assertTrue(Pattern.compile("build-info-extractor-ivy-(?:.+)(?:-SNAPSHOT)?-uber.jar")
-                .matcher(PluginProperties.getPluginProperty(PluginProperties.IVY_DEPENDENCY_FILENAME_KEY)).
+                .matcher(PluginProperties.getPropertyValue(PluginProperties.IVY_DEPENDENCY_FILENAME_KEY)).
                         matches(), "Ivy dependency filename doesn't match the expected pattern.");
     }
 

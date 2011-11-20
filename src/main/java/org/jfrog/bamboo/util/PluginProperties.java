@@ -17,13 +17,14 @@
 package org.jfrog.bamboo.util;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 /**
+ * Loads and serves the contents of the plugins properties file
+ *
  * @author Noam Y. Tenne
  */
 public class PluginProperties {
@@ -45,33 +46,15 @@ public class PluginProperties {
     }
 
     public static String getPluginKey() {
-        String pluginKey = pluginProperties.getProperty(PLUGIN_KEY);
-        if (StringUtils.isBlank(pluginKey)) {
-            throw new IllegalStateException(
-                    "Could not find " + PLUGIN_KEY + " property within artifactory.plugin.properties.");
-        }
-
-        return pluginKey;
+        return getPropertyValue(PLUGIN_KEY);
     }
 
     public static String getPluginDescriptorKey() {
-        String pluginDescriptorKey = pluginProperties.getProperty(PLUGIN_DESCRIPTOR_KEY);
-        if (StringUtils.isBlank(pluginDescriptorKey)) {
-            throw new IllegalStateException("Could not find " + PLUGIN_DESCRIPTOR_KEY +
-                    " property within artifactory.plugin.properties.");
-        }
-
-        return pluginDescriptorKey;
+        return getPropertyValue(PLUGIN_DESCRIPTOR_KEY);
     }
 
-    public static String getPluginProperty(String propertyName) {
-        String maven3DependencyFileName = pluginProperties.getProperty(propertyName);
-        if (StringUtils.isBlank(maven3DependencyFileName)) {
-            throw new IllegalStateException(
-                    "Could not find " + propertyName + " property within artifactory.plugin.properties.");
-        }
-
-        return maven3DependencyFileName;
+    public static String getPropertyValue(String propertyKey) {
+        return pluginProperties.getProperty(propertyKey);
     }
 
     private static Properties getPluginProperties() throws IOException {

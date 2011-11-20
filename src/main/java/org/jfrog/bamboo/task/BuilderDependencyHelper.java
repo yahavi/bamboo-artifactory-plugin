@@ -120,7 +120,7 @@ public class BuilderDependencyHelper implements Serializable {
     private void downloadDependencies(String dependencyBaseUrl, File builderDependencyDir, String dependencyKey)
             throws IOException {
         HttpClient client = new HttpClient();
-        String dependencyFileName = PluginProperties.getPluginProperty(dependencyKey);
+        String dependencyFileName = PluginProperties.getPropertyValue(dependencyKey);
         String dependencyUrl = dependencyBaseUrl + dependencyFileName;
         GetMethod getMethod = new GetMethod(dependencyUrl);
 
