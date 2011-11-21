@@ -58,7 +58,7 @@ public class ArtifactoryMaven3Task extends ArtifactoryTaskType {
     private boolean activateBuildInfoRecording;
 
     public ArtifactoryMaven3Task(final ProcessService processService,
-            final EnvironmentVariableAccessor environmentVariableAccessor, final CapabilityContext capabilityContext,
+            EnvironmentVariableAccessor environmentVariableAccessor, final CapabilityContext capabilityContext,
             TestCollationService testCollationService) {
         super(testCollationService);
         this.processService = processService;
@@ -68,15 +68,13 @@ public class ArtifactoryMaven3Task extends ArtifactoryTaskType {
         ContainerManager.autowireComponent(dependencyHelper);
     }
 
+    @Override
     @NotNull
     public TaskResult execute(@NotNull TaskContext taskContext) throws TaskException {
-        BuildLogger logger = getBuildLogger(taskContext);
+        BuildLogger logger = taskContext.getBuildLogger();
         final ErrorMemorisingInterceptor errorLines = new ErrorMemorisingInterceptor();
         logger.getInterceptorStack().add(errorLines);
-        Map<String, String> combinedMap = Maps.newHashMap();
-        combinedMap.putAll(taskContext.getConfigurationMap());
-        Map<String, String> customBuildData = taskContext.getBuildContext().getBuildResult().getCustomBuildData();
-        combinedMap.putAll(customBuildData);
+        Map<String, String> combinedMap = getCombinedBuildDataMap(taskContext);
         Maven3BuildContext buildContext = new Maven3BuildContext(combinedMap);
         long serverId = buildContext.getArtifactoryServerId();
         File workingDirectory = taskContext.getWorkingDirectory();
@@ -274,8 +272,7 @@ public class ArtifactoryMaven3Task extends ArtifactoryTaskType {
      *
      * @return Java bin path
      */
-    @Override
-    public String getExecutable(AbstractBuildContext context) throws TaskException {
+    private String getExecutable(AbstractBuildContext context) throws TaskException {
         return getJavaHome(context, capabilityContext);
     }
 
@@ -308,7 +305,7 @@ public class ArtifactoryMaven3Task extends ArtifactoryTaskType {
      * @param capabilityContext The capability context of the build.
      * @return The path to the Java home.
      */
-    public String getJavaHome(AbstractBuildContext context, CapabilityContext capabilityContext) {
+    private String getJavaHome(AbstractBuildContext context, CapabilityContext capabilityContext) {
         String jdkHome;
         String jdkCapabilityKey = (new StringBuilder()).append(JDK_LABEL_KEY).append(context.getJdkLabel()).toString();
         ReadOnlyCapabilitySet capabilitySet = capabilityContext.getCapabilitySet();
@@ -348,7 +345,7 @@ public class ArtifactoryMaven3Task extends ArtifactoryTaskType {
      * @param basePath Base path
      * @return String builder
      */
-    public StringBuilder getPathBuilder(String basePath) {
+    private StringBuilder getPathBuilder(String basePath) {
         StringBuilder confPathBuilder = new StringBuilder(basePath);
         if (!basePath.endsWith(File.separator)) {
             confPathBuilder.append(File.separator);
@@ -359,7 +356,7 @@ public class ArtifactoryMaven3Task extends ArtifactoryTaskType {
     /**
      * @return The canonical path for a path.
      */
-    public String getCanonicalPath(String path) {
+    private String getCanonicalPath(String path) {
         if (StringUtils.contains(path, " ")) {
             try {
                 File f = new File(path);

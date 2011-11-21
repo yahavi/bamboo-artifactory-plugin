@@ -13,7 +13,6 @@ import com.atlassian.bamboo.task.TaskContext;
 import com.atlassian.bamboo.task.TaskException;
 import com.atlassian.bamboo.task.TaskResult;
 import com.atlassian.bamboo.task.TaskResultBuilder;
-import com.atlassian.bamboo.v2.build.BuildContext;
 import com.atlassian.bamboo.v2.build.agent.capability.Capability;
 import com.atlassian.bamboo.v2.build.agent.capability.CapabilityContext;
 import com.atlassian.bamboo.v2.build.agent.capability.ReadOnlyCapabilitySet;
@@ -72,21 +71,16 @@ public class ArtifactoryGradleTask extends ArtifactoryTaskType {
         ContainerManager.autowireComponent(dependencyHelper);
     }
 
+    @Override
     @NotNull
-    public TaskResult execute(@NotNull TaskContext context) throws TaskException {
-        BuildLogger logger = getBuildLogger(context);
+    public TaskResult execute(@NotNull TaskContext taskContext) throws TaskException {
+        BuildLogger logger = taskContext.getBuildLogger();
         final ErrorMemorisingInterceptor errorLines = new ErrorMemorisingInterceptor();
         logger.getInterceptorStack().add(errorLines);
-        Map<String, String> combinedMap = Maps.newHashMap();
-        combinedMap.putAll(context.getConfigurationMap());
-        BuildContext parentBuildContext = context.getBuildContext().getParentBuildContext();
-        if (parentBuildContext != null) {
-            Map<String, String> customBuildData = parentBuildContext.getBuildResult().getCustomBuildData();
-            combinedMap.putAll(customBuildData);
-        }
+        Map<String, String> combinedMap = getCombinedBuildDataMap(taskContext);
         GradleBuildContext buildContext = new GradleBuildContext(combinedMap);
         long serverId = buildContext.getArtifactoryServerId();
-        File workingDirectory = context.getWorkingDirectory();
+        File workingDirectory = taskContext.getWorkingDirectory();
         try {
             gradleDependenciesDir = extractGradleDependencies(serverId, workingDirectory, buildContext);
         } catch (IOException e) {
@@ -100,7 +94,7 @@ public class ArtifactoryGradleTask extends ArtifactoryTaskType {
         String gradleCommandLine = getExecutable(buildContext);
         if (StringUtils.isBlank(gradleCommandLine)) {
             log.error(logger.addErrorLogEntry("Gradle executable is not defined!"));
-            return TaskResultBuilder.create(context).failed().build();
+            return TaskResultBuilder.create(taskContext).failed().build();
         }
         List<String> command = Lists.newArrayList(gradleCommandLine);
         String switches = buildContext.getSwitches();
@@ -120,7 +114,7 @@ public class ArtifactoryGradleTask extends ArtifactoryTaskType {
             command.addAll(Arrays.asList(taskTokens));
         }
 
-        ConfigurationPathHolder pathHolder = getGradleInitScriptFile(context, buildContext);
+        ConfigurationPathHolder pathHolder = getGradleInitScriptFile(taskContext, buildContext);
         if (pathHolder != null) {
             if (!buildContext.useArtifactoryGradlePlugin()) {
                 command.add("-I");
@@ -143,10 +137,10 @@ public class ArtifactoryGradleTask extends ArtifactoryTaskType {
         ExternalProcessBuilder processBuilder =
                 new ExternalProcessBuilder().workingDirectory(workingDirectory).command(command).env(env);
         try {
-            ExternalProcess process = processService.executeProcess(context, processBuilder);
-            return collectTestResults(buildContext, context, process);
+            ExternalProcess process = processService.executeProcess(taskContext, processBuilder);
+            return collectTestResults(buildContext, taskContext, process);
         } finally {
-            context.getBuildContext().getBuildResult().addBuildErrors(errorLines.getErrorStringList());
+            taskContext.getBuildContext().getBuildResult().addBuildErrors(errorLines.getErrorStringList());
         }
     }
 
@@ -199,8 +193,7 @@ public class ArtifactoryGradleTask extends ArtifactoryTaskType {
         }
     }
 
-    @Override
-    public String getExecutable(AbstractBuildContext buildContext) throws TaskException {
+    private String getExecutable(AbstractBuildContext buildContext) throws TaskException {
         ReadOnlyCapabilitySet capabilitySet = capabilityContext.getCapabilitySet();
         if (capabilitySet == null) {
             return null;

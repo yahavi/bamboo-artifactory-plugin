@@ -1,14 +1,16 @@
 package org.jfrog.bamboo.task;
 
-import com.atlassian.bamboo.build.logger.BuildLogger;
 import com.atlassian.bamboo.build.test.TestCollationService;
 import com.atlassian.bamboo.task.TaskContext;
-import com.atlassian.bamboo.task.TaskException;
 import com.atlassian.bamboo.task.TaskResult;
 import com.atlassian.bamboo.task.TaskResultBuilder;
 import com.atlassian.bamboo.task.TaskType;
+import com.atlassian.bamboo.v2.build.BuildContext;
 import com.atlassian.utils.process.ExternalProcess;
+import com.google.common.collect.Maps;
 import org.jfrog.bamboo.context.AbstractBuildContext;
+
+import java.util.Map;
 
 /**
  * Common super type for all tasks
@@ -23,27 +25,7 @@ public abstract class ArtifactoryTaskType implements TaskType {
         this.testCollationService = testCollationService;
     }
 
-    /**
-     * Get the build logger that will print messages to Bamboo's log from the context.
-     *
-     * @param taskContext The task context.
-     * @return The build logger.
-     */
-    public BuildLogger getBuildLogger(TaskContext taskContext) {
-        return taskContext.getBuildLogger();
-    }
-
-    /**
-     * Get the executable to run for the build based upon the build's context.
-     *
-     * @param buildContext The build context.
-     * @return The path to the executable to run for the build
-     * @throws TaskException Thrown if the path to the executable defined in the build's {@link
-     *                       com.atlassian.bamboo.v2.build.agent.capability.Capability} does not exist.
-     */
-    public abstract String getExecutable(AbstractBuildContext buildContext) throws TaskException;
-
-    public TaskResult collectTestResults(AbstractBuildContext buildContext, TaskContext taskContext,
+    protected TaskResult collectTestResults(AbstractBuildContext buildContext, TaskContext taskContext,
             ExternalProcess process) {
         TaskResultBuilder builder = TaskResultBuilder.create(taskContext).checkReturnCode(process);
         if (buildContext.isTestChecked() && buildContext.getTestDirectory() != null) {
@@ -51,5 +33,17 @@ public abstract class ArtifactoryTaskType implements TaskType {
             builder.checkTestFailures();
         }
         return builder.build();
+    }
+
+    protected Map<String, String> getCombinedBuildDataMap(TaskContext taskContext) {
+        Map<String, String> combinedMap = Maps.newHashMap(taskContext.getConfigurationMap());
+        BuildContext buildContext = taskContext.getBuildContext();
+        combinedMap.putAll(buildContext.getBuildResult().getCustomBuildData());
+        BuildContext parentBuildContext = buildContext.getParentBuildContext();
+        if (parentBuildContext != null) {
+            Map<String, String> customBuildData = parentBuildContext.getBuildResult().getCustomBuildData();
+            combinedMap.putAll(customBuildData);
+        }
+        return combinedMap;
     }
 }

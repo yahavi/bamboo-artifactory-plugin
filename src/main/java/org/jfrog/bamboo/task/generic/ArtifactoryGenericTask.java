@@ -57,6 +57,7 @@ public class ArtifactoryGenericTask implements TaskType {
         this.environmentVariableAccessor = environmentVariableAccessor;
     }
 
+    @Override
     @NotNull
     public TaskResult execute(@NotNull TaskContext taskContext) throws TaskException {
         logger = taskContext.getBuildLogger();

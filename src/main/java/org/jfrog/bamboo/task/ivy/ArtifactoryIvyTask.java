@@ -66,16 +66,15 @@ public class ArtifactoryIvyTask extends ArtifactoryTaskType {
         ContainerManager.autowireComponent(dependencyHelper);
     }
 
+    @Override
     @NotNull
-    public TaskResult execute(@NotNull TaskContext context) throws TaskException {
-        BuildLogger logger = getBuildLogger(context);
+    public TaskResult execute(@NotNull TaskContext taskContext) throws TaskException {
+        BuildLogger logger = taskContext.getBuildLogger();
         final ErrorMemorisingInterceptor errorLines = new ErrorMemorisingInterceptor();
         logger.getInterceptorStack().add(errorLines);
-        Map<String, String> combinedMap = Maps.newHashMap();
-        combinedMap.putAll(context.getConfigurationMap());
-        combinedMap.putAll(context.getBuildContext().getBuildDefinition().getCustomConfiguration());
+        Map<String, String> combinedMap = getCombinedBuildDataMap(taskContext);
         IvyBuildContext buildContext = new IvyBuildContext(combinedMap);
-        File workingDirectory = context.getWorkingDirectory();
+        File workingDirectory = taskContext.getWorkingDirectory();
         long serverId = buildContext.getArtifactoryServerId();
         try {
             ivyDependenciesDir = extractIvyDependencies(serverId, workingDirectory, buildContext);
@@ -96,15 +95,15 @@ public class ArtifactoryIvyTask extends ArtifactoryTaskType {
         String executable = getExecutable(buildContext);
         if (StringUtils.isBlank(executable)) {
             log.error(logger.addErrorLogEntry("Cannot find ivy executable"));
-            return TaskResultBuilder.create(context).failed().build();
+            return TaskResultBuilder.create(taskContext).failed().build();
         }
         Map<String, String> globalEnv = environmentVariableAccessor.getEnvironment();
         Map<String, String> environment = Maps.newHashMap(globalEnv);
         if (StringUtils.isNotBlank(ivyDependenciesDir)) {
             ArtifactoryBuildInfoPropertyHelper propertyHelper = new IvyPropertyHelper();
-            propertyHelper.init(context.getBuildContext());
-            buildInfoPropertiesFile = propertyHelper.createFileAndGetPath(buildContext, context.getBuildLogger(),
-                    environmentVariableAccessor.getEnvironment(context), globalEnv);
+            propertyHelper.init(taskContext.getBuildContext());
+            buildInfoPropertiesFile = propertyHelper.createFileAndGetPath(buildContext, taskContext.getBuildLogger(),
+                    environmentVariableAccessor.getEnvironment(taskContext), globalEnv);
             if (StringUtils.isNotBlank(buildInfoPropertiesFile)) {
                 activateBuildInfoRecording = true;
                 environment.put(BuildInfoConfigProperties.PROP_PROPS_FILE, buildInfoPropertiesFile);
@@ -143,10 +142,10 @@ public class ArtifactoryIvyTask extends ArtifactoryTaskType {
                 new ExternalProcessBuilder().workingDirectory(workingDirectory).command(command)
                         .env(environment);
         try {
-            return TaskResultBuilder.create(context)
-                    .checkReturnCode(processService.executeProcess(context, processBuilder)).build();
+            return TaskResultBuilder.create(taskContext)
+                    .checkReturnCode(processService.executeProcess(taskContext, processBuilder)).build();
         } finally {
-            context.getBuildContext().getBuildResult().addBuildErrors(errorLines.getErrorStringList());
+            taskContext.getBuildContext().getBuildResult().addBuildErrors(errorLines.getErrorStringList());
         }
     }
 
@@ -166,8 +165,7 @@ public class ArtifactoryIvyTask extends ArtifactoryTaskType {
                 PluginProperties.IVY_DEPENDENCY_FILENAME_KEY);
     }
 
-    @Override
-    public String getExecutable(AbstractBuildContext buildContext) throws TaskException {
+    private String getExecutable(AbstractBuildContext buildContext) throws TaskException {
         ReadOnlyCapabilitySet capabilitySet = capabilityContext.getCapabilitySet();
         if (capabilitySet == null) {
             return null;
