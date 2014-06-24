@@ -23,15 +23,7 @@
     <description>Artifactory Build Info plugin for Atlassian Bamboo.</description>
 
     <developers>
-        <developer>
-        <id>noamt</id>
-        <name>Noam Y. Tenne</name>
-        <email>noamt at jfrog.org</email>
-        <roles>
-            <role>Lead Developer</role>
-        </roles>
-    </developer>
-        <developer>
+            <developer>
             <id>noamt</id>
             <name>Noam Y. Tenne</name>
             <email>noamt at jfrog.org</email>

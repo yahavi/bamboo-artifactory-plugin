@@ -47,9 +47,10 @@ public class ConfigureArtifactoryServerAction extends BambooActionSupport implem
     private int timeout;
     private transient ServerConfigManager serverConfigManager;
 
-    public ConfigureArtifactoryServerAction() {
-        serverConfigManager = (ServerConfigManager) ContainerManager.getComponent(
-                ConstantValues.ARTIFACTORY_SERVER_CONFIG_MODULE_KEY);
+    public ConfigureArtifactoryServerAction(ServerConfigManager serverConfigManager) {
+        /*serverConfigManager = (ServerConfigManager) ContainerManager.getComponent(
+                ConstantValues.ARTIFACTORY_SERVER_CONFIG_MODULE_KEY);*/
+        this.serverConfigManager = serverConfigManager;
         mode = "add";
         timeout = 300;
     }
@@ -206,4 +207,8 @@ public class ConfigureArtifactoryServerAction extends BambooActionSupport implem
         addActionError("Connection failed " + errorMessage);
         log.error("Error while testing the connection to Artifactory server " + url, e);
     }
+
+    /*public void setServerConfigManager(ServerConfigManager serverConfigManager) {
+        this.serverConfigManager = serverConfigManager;
+    }*/
 }

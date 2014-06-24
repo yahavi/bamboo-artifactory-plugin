@@ -54,12 +54,22 @@ import java.util.*;
  */
 @RemoteAgentSupported
 public class ReleaseAndPromotionAction extends ViewBuildResults {
-    private static final Logger log = Logger.getLogger(ReleaseAndPromotionAction.class);
-    private static final String PROMOTION_NORMAL_MODE = "normalMode";
     public static final String PROMOTION_PUSH_TO_NEXUS_MODE = "pushToNexusMode";
     public static final String NEXUS_PUSH_PLUGIN_NAME = "bintrayOsoPush";
     public static final String NEXUS_PUSH_PROPERTY_PREFIX = NEXUS_PUSH_PLUGIN_NAME + ".";
+    public static final String NEXT_INTEG_KEY = "version.nextIntegValue";
+    public static final String RELEASE_VALUE_KEY = "version.releaseValue";
+    public static final String CURRENT_VALUE_KEY = "version.currentValue";
+    public static final String RELEASE_PROP_KEY = "version.releaseProp";
+    public static final String MODULE_KEY = "version.key";
+    private static final Logger log = Logger.getLogger(ReleaseAndPromotionAction.class);
+    private static final String PROMOTION_NORMAL_MODE = "normalMode";
     private String promotionMode = PROMOTION_NORMAL_MODE;
+    private static final Map<String, String> MODULE_VERSION_TYPES =
+            ImmutableMap.of(ReleaseProvider.CFG_ONE_VERSION, "One version for all modules.",
+                    ReleaseProvider.CFG_VERSION_PER_MODULE, "Version per module",
+                    ReleaseProvider.CFG_USE_EXISTING_VERSION, "Use existing module versions");
+    public static PromotionContext promotionContext = new PromotionContext();
     private boolean promoting = true;
     private String promotionRepo = "";
     private VariableDefinitionManager variableDefinitionManager;
@@ -68,11 +78,6 @@ public class ReleaseAndPromotionAction extends ViewBuildResults {
     private boolean useCopy;
     private boolean includeDependencies;
     private String artifactoryReleaseManagementUrl = "";
-
-    private static final Map<String, String> MODULE_VERSION_TYPES =
-            ImmutableMap.of(ReleaseProvider.CFG_ONE_VERSION, "One version for all modules.",
-                    ReleaseProvider.CFG_VERSION_PER_MODULE, "Version per module",
-                    ReleaseProvider.CFG_USE_EXISTING_VERSION, "Use existing module versions");
     private String moduleVersionConfiguration = ReleaseProvider.CFG_ONE_VERSION;
     private boolean createVcsTag = true;
     private String tagUrl;
@@ -84,14 +89,10 @@ public class ReleaseAndPromotionAction extends ViewBuildResults {
     private CapabilityContext capabilityContext;
     private String releaseBranch;
     private List<ModuleVersionHolder> versions;
-    public static PromotionContext promotionContext = new PromotionContext();
-    public static final String NEXT_INTEG_KEY = "version.nextIntegValue";
-    public static final String RELEASE_VALUE_KEY = "version.releaseValue";
-    public static final String CURRENT_VALUE_KEY = "version.currentValue";
-    public static final String RELEASE_PROP_KEY = "version.releaseProp";
-    public static final String MODULE_KEY = "version.key";
+    private ServerConfigManager serverConfigManager;
 
-    public ReleaseAndPromotionAction() {
+    public ReleaseAndPromotionAction(ServerConfigManager serverConfigManager) {
+        this.serverConfigManager = serverConfigManager;
     }
 
     @Override
@@ -147,6 +148,10 @@ public class ReleaseAndPromotionAction extends ViewBuildResults {
             }
         }
         return versions;
+    }
+
+    public void setVersions(List<ModuleVersionHolder> versions) {
+        this.versions = versions;
     }
 
     private int findLatestBuildNumberWithBuildInfo() {
@@ -322,11 +327,6 @@ public class ReleaseAndPromotionAction extends ViewBuildResults {
         return (Job) getPlan();
     }
 
-
-    public void setVersions(List<ModuleVersionHolder> versions) {
-        this.versions = versions;
-    }
-
     public String getModuleVersionConfiguration() {
         return moduleVersionConfiguration;
     }
@@ -384,9 +384,9 @@ public class ReleaseAndPromotionAction extends ViewBuildResults {
         if (StringUtils.isBlank(serverId)) {
             return Lists.newArrayList();
         }
-        ServerConfigManager component = (ServerConfigManager) ContainerManager.getComponent(
-                ConstantValues.ARTIFACTORY_SERVER_CONFIG_MODULE_KEY);
-        return component.getDeployableRepos(Long.parseLong(serverId));
+/*        ServerConfigManager component = (ServerConfigManager) ContainerManager.getComponent(
+                ConstantValues.ARTIFACTORY_SERVER_CONFIG_MODULE_KEY);*/
+        return serverConfigManager.getDeployableRepos(Long.parseLong(serverId));
     }
 
     public String getReleasePublishingRepo() {
@@ -546,8 +546,8 @@ public class ReleaseAndPromotionAction extends ViewBuildResults {
             log.error("You are not permitted to execute build promotion.");
             return ERROR;
         }
-        ServerConfigManager component = (ServerConfigManager) ContainerManager.getComponent(
-                ConstantValues.ARTIFACTORY_SERVER_CONFIG_MODULE_KEY);
+        /*ServerConfigManager component = (ServerConfigManager) ContainerManager.getComponent(
+                ConstantValues.ARTIFACTORY_SERVER_CONFIG_MODULE_KEY);*/
         TaskDefinition definition = getMavenOrGradleTaskDefinition();
         if (definition == null) {
             return ERROR;
@@ -557,7 +557,7 @@ public class ReleaseAndPromotionAction extends ViewBuildResults {
             log.error("No selected Artifactory server Id");
             return ERROR;
         }
-        ServerConfig serverConfig = component.getServerConfigById(Long.parseLong(serverId));
+        ServerConfig serverConfig = serverConfigManager.getServerConfigById(Long.parseLong(serverId));
         if (serverConfig == null) {
             log.error("Error while retrieving target repository list: Could not find Artifactory server " +
                     "configuration by the ID " + serverId);
@@ -617,8 +617,8 @@ public class ReleaseAndPromotionAction extends ViewBuildResults {
     }
 
     private boolean isPushToNexusEnabled() {
-        ServerConfigManager component = (ServerConfigManager) ContainerManager.getComponent(
-                ConstantValues.ARTIFACTORY_SERVER_CONFIG_MODULE_KEY);
+        /*ServerConfigManager component = (ServerConfigManager) ContainerManager.getComponent(
+                ConstantValues.ARTIFACTORY_SERVER_CONFIG_MODULE_KEY);*/
         TaskDefinition definition = getMavenOrGradleTaskDefinition();
         if (definition == null) {
             return false;
@@ -628,7 +628,7 @@ public class ReleaseAndPromotionAction extends ViewBuildResults {
             log.error("No special promotion modes enabled: no selected Artifactory server Id.");
             return false;
         }
-        ServerConfig serverConfig = component.getServerConfigById(Long.parseLong(serverId));
+        ServerConfig serverConfig = serverConfigManager.getServerConfigById(Long.parseLong(serverId));
         if (serverConfig == null) {
             log.error("No special promotion modes enabled: error while retrieving querying for enabled user plugins: " +
                     "could not find Artifactory server configuration by the ID " + serverId);
@@ -682,9 +682,9 @@ public class ReleaseAndPromotionAction extends ViewBuildResults {
             log.warn("No Artifactory server Id found");
             return Lists.newArrayList();
         }
-        ServerConfigManager component = (ServerConfigManager) ContainerManager.getComponent(
-                ConstantValues.ARTIFACTORY_SERVER_CONFIG_MODULE_KEY);
-        return component.getDeployableRepos(Long.parseLong(selectedServerId));
+        /*ServerConfigManager component = (ServerConfigManager) ContainerManager.getComponent(
+                ConstantValues.ARTIFACTORY_SERVER_CONFIG_MODULE_KEY);*/
+        return serverConfigManager.getDeployableRepos(Long.parseLong(selectedServerId));
     }
 
     public String getSelectedServerId(TaskDefinition definition) {
@@ -784,6 +784,7 @@ public class ReleaseAndPromotionAction extends ViewBuildResults {
     public void setArtifactoryReleaseManagementUrl(String artifactoryReleaseManagementUrl) {
         this.artifactoryReleaseManagementUrl = artifactoryReleaseManagementUrl;
     }
+
 
     public String doGetLog() {
         return SUCCESS;

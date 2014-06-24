@@ -32,7 +32,7 @@ public interface ConstantValues extends Serializable {
 
     public static final String ADMIN_CONFIG_SERVLET_CONTEXT_NAME = "artifactoryAdminConfigServlet";
 
-    public static final String ARTIFACTORY_SERVER_CONFIG_MODULE_KEY = "artifactoryServerConfigManager";
+    public static final String ARTIFACTORY_SERVER_CONFIG_MODULE_KEY = "serverConfigManager";
 
     public static final String PLAN_KEY_PARAM = "planKey";
 }

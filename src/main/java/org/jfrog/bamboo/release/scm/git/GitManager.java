@@ -15,7 +15,7 @@ import com.atlassian.bamboo.variable.CustomVariableContext;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
-import com.opensymphony.xwork.TextProvider;
+import com.atlassian.struts.TextProvider;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -52,6 +52,7 @@ public class GitManager extends AbstractScmManager<AbstractRepository> {
     private TextProvider textProvider;
     private CustomVariableContext customVariableContext;
     private CredentialsAccessor credentialsAccessor;
+    private EncryptionService encryptionService;
     private String username = "";
     private String password = "";
 
@@ -61,14 +62,14 @@ public class GitManager extends AbstractScmManager<AbstractRepository> {
         this.buildLogger = buildLogger;
         this.customVariableContext = customVariableContext;
         this.credentialsAccessor = credentialsAccessor;
+
         HierarchicalConfiguration configuration = repository.toConfiguration();
-        StringEncrypter encrypter = new StringEncrypter();
         if ("com.atlassian.bamboo.plugins.git.GitRepository".equals(repository.getClass().getName())) {
             username = configuration.getString("repository.git.username", "");
-            password = encrypter.decrypt(configuration.getString("repository.git.password", ""));
+            password = encryptionService.decrypt(configuration.getString("repository.git.password", ""));
         } else if ("com.atlassian.bamboo.plugins.git.GitHubRepository".equals(repository.getClass().getName())) {
             username = configuration.getString("repository.github.username", "");
-            password = encrypter.decrypt(configuration.getString("repository.github.password", ""));
+            password = encryptionService.decrypt(configuration.getString("repository.github.password", ""));
         }
     }
 
@@ -155,6 +156,10 @@ public class GitManager extends AbstractScmManager<AbstractRepository> {
 
     public void setTextProvider(TextProvider textProvider) {
         this.textProvider = textProvider;
+    }
+
+    public void setEncryptionService(EncryptionService encryptionService) {
+        this.encryptionService = encryptionService;
     }
 
     public void checkoutBranch(final String branch, final boolean create) throws IOException {
@@ -333,7 +338,7 @@ public class GitManager extends AbstractScmManager<AbstractRepository> {
                 if (transport instanceof SshTransport) {
                     AbstractRepository scm = getBambooScm();
                     HierarchicalConfiguration configuration = scm.toConfiguration();
-                    EncryptionService encryptionService = ComponentAccessor.ENCRYPTION_SERVICE.get();
+                    EncryptionService encryptionService = this.encryptionService;//ComponentAccessor.ENCRYPTION_SERVICE.get();
                     String sshKey = "";
                     String passphrase = "";
                     if (authenticationType.equals(GitAuthenticationType.SHARED_CREDENTIALS)) {

@@ -37,7 +37,19 @@ public class PluginDescriptorValidityTest {
         InputStream pluginDescriptorStream = getClass().getResourceAsStream("atlassian-plugin.xml");
         String pluginDescriptorContent = IOUtils.toString(pluginDescriptorStream);
         Assert.assertTrue(pluginDescriptorContent.contains("<result name=\"input\" type=\"freemarker\">/" +
-                "templates/plugins/result/buildInfoAction.ftl</result>"),
+                        "templates/plugins/result/buildInfoAction.ftl</result>"),
+                "Could not find expected summary template declaration. Was the line wrapped again?");
+
+        Assert.assertTrue(pluginDescriptorContent.contains("<result name=\"error\" type=\"freemarker\">/" +
+                        "templates/plugins/result/buildInfoAction.ftl</result>"),
+                "Could not find expected summary template declaration. Was the line wrapped again?");
+
+        Assert.assertTrue(pluginDescriptorContent.contains("<resource type=\"freemarker\" name=\"edit\" " +
+                        "location=\"templates/plugins/generic/artifactoryGenericBuildActionEdit.ftl\"/>"),
+                "Could not find expected summary template declaration. Was the line wrapped again?");
+
+        Assert.assertTrue(pluginDescriptorContent.contains("<resource type=\"freemarker\" name=\"view\" " +
+                        "location=\"templates/plugins/generic/artifactoryGenericBuildActionView.ftl\"/>"),
                 "Could not find expected summary template declaration. Was the line wrapped again?");
     }
 }
