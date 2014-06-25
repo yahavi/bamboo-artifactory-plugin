@@ -85,6 +85,10 @@
                     <groupId>com.tek42.perforce</groupId>
                     <artifactId>p4java</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -194,6 +198,13 @@
                 <extensions>true</extensions>
                 <configuration>
                     <productVersion>${bamboo.version}</productVersion>
+                    <skipManifestValidation>true</skipManifestValidation>
+                    <instructions>
+                        <Import-Package>
+                            com.atlassian.bucket.*
+                        </Import-Package>
+                    </instructions>
+
                 </configuration>
             </plugin>
             <plugin>
