@@ -5,6 +5,7 @@ import com.atlassian.bamboo.utils.EscapeChars;
 import com.atlassian.spring.container.ContainerManager;
 import com.google.common.collect.Maps;
 import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.io.IOUtils;
@@ -30,7 +31,7 @@ public class ConfigurationHelper implements Serializable {
 
     private static ConfigurationHelper instance = new ConfigurationHelper();
     private AdministrationConfigurationAccessor administrationConfigurationAccessor;
-    private HttpClient httpClient = new HttpClient();
+    private HttpClient httpClient = new HttpClient(new MultiThreadedHttpConnectionManager());
 
     private ConfigurationHelper() {
         ContainerManager.autowireComponent(this);
