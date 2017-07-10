@@ -17,7 +17,7 @@
 package org.jfrog.bamboo.admin;
 
 import com.atlassian.bamboo.security.GlobalApplicationSecureObject;
-import com.atlassian.bamboo.ww2.actions.admin.user.AbstractEntityPagerSupport;
+import com.atlassian.bamboo.ww2.BambooActionSupport;
 import com.atlassian.bamboo.ww2.aware.permissions.GlobalAdminSecurityAware;
 
 import java.util.List;
@@ -27,7 +27,7 @@ import java.util.List;
  *
  * @author Noam Y. Tenne
  */
-public class ExistingArtifactoryServerAction extends AbstractEntityPagerSupport implements GlobalAdminSecurityAware {
+public class ExistingArtifactoryServerAction extends BambooActionSupport implements GlobalAdminSecurityAware {
 
 	private ServerConfigManager serverConfigManager;
 
