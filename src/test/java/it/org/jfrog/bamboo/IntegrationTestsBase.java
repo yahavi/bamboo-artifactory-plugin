@@ -54,7 +54,7 @@ public abstract class IntegrationTestsBase {
      */
     @Before
     public void executePlan() {
-        helper = new IntegrationTestsHelper(ARTIFACTORY_URL, ARTIFACTORY_USERNAME, ARTIFACTORY_PASSWORD);
+        helper = new IntegrationTestsHelper();
         PlanKey planKey = PlanKeys.getPlanKey(this.planKey);
         ImmutableChain chain = planManager.getPlanByKey(planKey, Chain.class);
         assertNotNull(chain);

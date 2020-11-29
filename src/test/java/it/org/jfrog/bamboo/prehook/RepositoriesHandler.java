@@ -20,7 +20,7 @@ public class RepositoriesHandler {
      * Create integration tests repositories.
      */
     static void createTestRepositories() {
-        try (IntegrationTestsHelper helper = new IntegrationTestsHelper(ARTIFACTORY_URL, ARTIFACTORY_USERNAME, ARTIFACTORY_PASSWORD)) {
+        try (IntegrationTestsHelper helper = new IntegrationTestsHelper()) {
             helper.cleanUpArtifactory();
             StrSubstitutor repoSubstitotor = new StrSubstitutor();
             for (TestRepositories testRepository : TestRepositories.values()) {
@@ -37,7 +37,7 @@ public class RepositoriesHandler {
     private static class DeleteTestRepositories extends Thread {
         @Override
         public void run() {
-            try (IntegrationTestsHelper helper = new IntegrationTestsHelper(ARTIFACTORY_URL, ARTIFACTORY_USERNAME, ARTIFACTORY_PASSWORD)) {
+            try (IntegrationTestsHelper helper = new IntegrationTestsHelper()) {
                 for (TestRepositories testRepository : TestRepositories.values()) {
                     helper.deleteRepo(testRepository.getTestRepository());
                 }

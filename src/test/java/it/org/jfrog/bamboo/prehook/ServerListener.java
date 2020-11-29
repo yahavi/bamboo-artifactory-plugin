@@ -2,10 +2,11 @@ package it.org.jfrog.bamboo.prehook;
 
 import com.atlassian.bamboo.event.ServerStartedEvent;
 import com.atlassian.event.api.EventListener;
-import org.apache.commons.lang3.StringUtils;
+import com.jfrog.testing.IntegrationTestsHelper;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
-import static it.org.jfrog.bamboo.Utils.*;
+import static it.org.jfrog.bamboo.Utils.GRADLE_HOME_ENV;
+import static it.org.jfrog.bamboo.Utils.MAVEN_HOME_ENV;
 import static it.org.jfrog.bamboo.prehook.RemoteAgent.startAgent;
 import static it.org.jfrog.bamboo.prehook.RepositoriesHandler.createTestRepositories;
 
@@ -39,23 +40,7 @@ public class ServerListener {
      * Verify required environment variables for the tests.
      */
     private void verifyEnvironment() {
-        verifyEnvironment(ARTIFACTORY_URL_ENV);
-        verifyEnvironment(ARTIFACTORY_USERNAME_ENV);
-        verifyEnvironment(ARTIFACTORY_PASSWORD_ENV);
-        verifyEnvironment(MAVEN_HOME_ENV);
-        verifyEnvironment(GRADLE_HOME_ENV);
-    }
-
-    /**
-     * Verify a single environment variable.
-     *
-     * @param envKey - The environment variable key to verify
-     */
-    private void verifyEnvironment(String envKey) {
-        if (StringUtils.isBlank(System.getenv(envKey))) {
-            String msg = envKey + " is not set";
-            System.err.println(msg);
-            throw new IllegalArgumentException(msg);
-        }
+        IntegrationTestsHelper.verifyEnvironment(MAVEN_HOME_ENV);
+        IntegrationTestsHelper.verifyEnvironment(GRADLE_HOME_ENV);
     }
 }

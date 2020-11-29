@@ -3,6 +3,7 @@ package it.org.jfrog.bamboo;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.jfrog.testing.IntegrationTestsHelper.*;
 import static org.jfrog.bamboo.configuration.BuildParamsOverrideManager.*;
 
 /**
@@ -10,16 +11,10 @@ import static org.jfrog.bamboo.configuration.BuildParamsOverrideManager.*;
  */
 public class Utils {
     // Environment variables names
-    public static final String ARTIFACTORY_USERNAME_ENV = "BAMBOO_ARTIFACTORY_USERNAME";
-    public static final String ARTIFACTORY_PASSWORD_ENV = "BAMBOO_ARTIFACTORY_PASSWORD";
-    public static final String ARTIFACTORY_URL_ENV = "BAMBOO_ARTIFACTORY_URL";
     public static final String GRADLE_HOME_ENV = "GRADLE_HOME";
     public static final String MAVEN_HOME_ENV = "MAVEN_HOME";
 
     // Environment variables values
-    public static final String ARTIFACTORY_USERNAME = System.getenv(ARTIFACTORY_USERNAME_ENV);
-    public static final String ARTIFACTORY_PASSWORD = System.getenv(ARTIFACTORY_PASSWORD_ENV);
-    public static final String ARTIFACTORY_URL = System.getenv(ARTIFACTORY_URL_ENV);
     public static final String GRADLE_HOME = System.getenv(GRADLE_HOME_ENV);
     public static final String MAVEN_HOME = System.getenv(MAVEN_HOME_ENV);
 
