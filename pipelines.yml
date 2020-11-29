@@ -20,9 +20,9 @@ pipelines:
       environmentVariables:
         readOnly:
           CI: "true"
-          BAMBOO_ARTIFACTORY_URL: $int_jfrog_rt_url
-          BAMBOO_ARTIFACTORY_USERNAME: $int_jfrog_rt_user
-          BAMBOO_ARTIFACTORY_PASSWORD: $int_jfrog_rt_password
+          ARTIFACTORY_URL: $int_jfrog_rt_url
+          ARTIFACTORY_USERNAME: $int_jfrog_rt_user
+          ARTIFACTORY_PASSWORD: $int_jfrog_rt_password
 
     steps:
       - name: Integration_Tests
