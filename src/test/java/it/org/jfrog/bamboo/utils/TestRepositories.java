@@ -1,4 +1,4 @@
-package it.org.jfrog.bamboo;
+package it.org.jfrog.bamboo.utils;
 
 import com.jfrog.testing.TestRepository;
 

@@ -7,6 +7,7 @@ import com.atlassian.bamboo.plan.cache.ImmutableChain;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
 import com.atlassian.user.impl.DefaultUser;
 import com.jfrog.testing.IntegrationTestsHelper;
+import it.org.jfrog.bamboo.utils.TestRepositories;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -19,8 +20,8 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static it.org.jfrog.bamboo.Utils.createEnv;
-import static it.org.jfrog.bamboo.Utils.createOverrideVars;
+import static it.org.jfrog.bamboo.utils.Utils.createEnv;
+import static it.org.jfrog.bamboo.utils.Utils.createOverrideVars;
 import static org.junit.Assert.*;
 
 /**

@@ -2,10 +2,8 @@ package it.org.jfrog.bamboo.prehook;
 
 import com.jfrog.testing.IntegrationTestsHelper;
 import it.org.jfrog.bamboo.IntegrationTestsBase;
-import it.org.jfrog.bamboo.TestRepositories;
+import it.org.jfrog.bamboo.utils.TestRepositories;
 import org.apache.commons.lang.text.StrSubstitutor;
-
-import static it.org.jfrog.bamboo.Utils.*;
 
 /**
  * Creates required Artifactory repositories before integration tests.

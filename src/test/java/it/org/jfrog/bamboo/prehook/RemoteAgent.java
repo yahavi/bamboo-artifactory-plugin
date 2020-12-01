@@ -22,8 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
-import static it.org.jfrog.bamboo.Utils.GRADLE_HOME;
-import static it.org.jfrog.bamboo.Utils.MAVEN_HOME;
+import static it.org.jfrog.bamboo.utils.Utils.GRADLE_HOME;
+import static it.org.jfrog.bamboo.utils.Utils.MAVEN_HOME;
 
 /**
  * Creates Bamboo remote agent before integration tests.

@@ -1,4 +1,4 @@
-package it.org.jfrog.bamboo;
+package it.org.jfrog.bamboo.utils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +26,7 @@ public class Utils {
      * @param jcenter      - JCenter repository key
      * @return overriding plan variables
      */
-    static Map<String, String> createOverrideVars(String localRepoKey, String jcenter) {
+    public static Map<String, String> createOverrideVars(String localRepoKey, String jcenter) {
         return new HashMap<String, String>() {{
             put(OVERRIDE_ARTIFACTORY_DEPLOYER_URL, ARTIFACTORY_URL);
             put(OVERRIDE_ARTIFACTORY_DEPLOYER_USERNAME, ARTIFACTORY_USERNAME);
@@ -44,7 +44,7 @@ public class Utils {
      *
      * @return plan environment variables
      */
-    static Map<String, String> createEnv() {
+    public static Map<String, String> createEnv() {
         return new HashMap<String, String>() {{
             // The collect env methodology should ignore this variable:
             put("DONT_COLLECT", "FOO");

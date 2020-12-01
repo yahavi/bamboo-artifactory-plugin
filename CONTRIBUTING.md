@@ -1,6 +1,5 @@
 # Contributing code to Bamboo Artifactory plugin
-We welcome code contributions through pull requests. 
-Before submitting a pull request, please make sure your code is well covered by tests.
+Before submitting a pull request, please make sure your code is covered by tests.
 Here are instructions for [building](#building-the-code) and [testing](#testing-the-code) the code.
 
 ## Building the Code
@@ -30,9 +29,10 @@ brew install atlassian/tap/atlassian-plugin-sdk
 * GRADLE_HOME
 
 ### Running the integration tests
-To run integration tests, the plugin use the Atlassian Wired tests. You can read more about it [here](https://developer.atlassian.com/server/framework/atlassian-sdk/run-wired-tests-with-the-plugin-test-console).
+To run integration tests, the plugin uses the Atlassian Wired tests infrastructure. 
+You can read more about it [here](https://developer.atlassian.com/server/framework/atlassian-sdk/run-wired-tests-with-the-plugin-test-console).
 
-To run the integration tests, in Bamboo Artifactory plugin source dir, execute the following command:
+To run the integration tests, in Git repository source dir, execute the following command:
 ```shell script
 atlas-clean && atlas-integration-test
 ```
@@ -62,7 +62,7 @@ The integration test should include 2 parts:
 | Tip: During the development of the test, you'll find yourself changing Java code and start the server again and again - make sure to NOT clean the code (using *atlas-clean*) because it will remove the temporary Bamboo Home environment.
 | --- |
 
-1. create a new class extending IntegrationTestsBase, under `src/test/java/it/org/jfrog/bamboo` - see current existing tests for reference.
+1. create a new class extending IntegrationTestsBase, in [src/test/java/it/org/jfrog/bamboo](./src/test/java/it/org/jfrog/bamboo) - see current existing tests for reference.
 2. Start the Bamboo server as instructed in the previous section. Make sure the new test appear in the *Test Console*.
 3. Temporary, configure real Artifactory credentials in: http://localhost:6990/bamboo/admin/jfrogConfig.action
 4. Create a new plan under *Integration Tests* project. Make sure the plan key is same as in the Java code. 

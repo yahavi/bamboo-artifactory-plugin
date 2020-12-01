@@ -10,4 +10,4 @@ and also in the [Bamboo Artifactory Plugin in Atlassian Marketplace](https://plu
 
 ## Code Contributions
 We welcome code contributions through pull requests. Please help us enhance the plugin!
-[Contribution guidelines for this project](CONTRIBUTING.md).
+For more information see the [contribution guidelines](CONTRIBUTING.md) for this project.

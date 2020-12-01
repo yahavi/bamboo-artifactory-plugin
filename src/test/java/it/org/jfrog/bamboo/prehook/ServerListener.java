@@ -9,8 +9,8 @@ import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import static it.org.jfrog.bamboo.Utils.GRADLE_HOME_ENV;
-import static it.org.jfrog.bamboo.Utils.MAVEN_HOME_ENV;
+import static it.org.jfrog.bamboo.utils.Utils.GRADLE_HOME_ENV;
+import static it.org.jfrog.bamboo.utils.Utils.MAVEN_HOME_ENV;
 import static it.org.jfrog.bamboo.prehook.RemoteAgent.startAgent;
 import static it.org.jfrog.bamboo.prehook.RepositoriesHandler.createTestRepositories;
 
