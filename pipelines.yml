@@ -40,7 +40,7 @@ pipelines:
             - echo sdkman_auto_answer=true > $HOME/.sdkman/etc/config
             - echo sdkman_auto_selfupdate=true >> $HOME/.sdkman/etc/config
             - source "/root/.sdkman/bin/sdkman-init.sh" && sdk update && sdk install java 8.0.275.hs-adpt
-            - git clone https://github.com/yahavi/jfrog-testing-infra.git
+            - git clone https://github.com/jfrog/jfrog-testing-infra.git
             - cd jfrog-testing-infra
             - git checkout code-review
             - ./gradlew clean build publishToMavenLocal
