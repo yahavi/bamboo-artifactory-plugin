@@ -36,12 +36,13 @@ public class ServerListener {
             verifyEnvironment();
             createTestRepositories();
             startAgent();
-            System.gc();
         } catch (Exception e) {
             String msg = "Bamboo Artifactory plugin tests: An error occurred";
             log.error(msg + ": " + ExceptionUtils.getRootCauseMessage(e));
             throw new RuntimeException(msg, e);
         }
+        // Run the garbage collector to clear up the heap
+        System.gc();
     }
 
     /**

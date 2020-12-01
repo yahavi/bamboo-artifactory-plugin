@@ -90,7 +90,7 @@ public class RemoteAgent {
         StrSubstitutor wrapperConfSubstitutor = new StrSubstitutor(new HashMap<String, String>() {{
             put("BAMBOO_AGENT_HOME", agentHome.toAbsolutePath().toString());
             put("JAVA_INIT_MEMORY_MB", "512");
-            put("JAVA_MAX_MEMORY_MB", "2048");
+            put("JAVA_MAX_MEMORY_MB", "1024");
         }});
         Path agentConfDir = Files.createDirectory(agentHome.resolve("conf"));
         try (InputStream is = IntegrationTestsBase.class.getClassLoader().getResourceAsStream("bamboo-agent-wrapper.conf")) {

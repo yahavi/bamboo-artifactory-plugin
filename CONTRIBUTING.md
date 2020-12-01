@@ -1,4 +1,4 @@
-# Contributing code to Bamboo Artifactory plugin
+# Contributing Code to Bamboo Artifactory Plugin
 Before submitting a pull request, please make sure your code is covered by tests.
 Here are instructions for [building](#building-the-code) and [testing](#testing-the-code) the code.
 
@@ -13,7 +13,7 @@ mvn clean package
 After the build finished, you'll find the bamboo-artifactory-plugin-<version>.jar file in the *target* directory. 
 This jar file can be loaded into Bamboo. 
 
-## Testing the code
+## Testing the Code
 ### Preconditions
 1. [Install the Atlassian SDK](https://developer.atlassian.com/server/framework/atlassian-sdk/install-the-atlassian-sdk-on-a-linux-or-mac-system/).
 For example, to install with Homebrew run:
@@ -32,14 +32,14 @@ brew install atlassian/tap/atlassian-plugin-sdk
 To run integration tests, the plugin uses the Atlassian Wired tests infrastructure. 
 You can read more about it [here](https://developer.atlassian.com/server/framework/atlassian-sdk/run-wired-tests-with-the-plugin-test-console).
 
-To run the integration tests, in Git repository source dir, execute the following command:
+To run the integration tests, execute the following command:
 ```shell script
 atlas-clean && atlas-integration-test
 ```
 
 ### Running a single test
 #### Step 1: Start the Bamboo server
-The integration tests store a Bamboo home instance in a zip file `src/test/resources/bamboo-home.zip`. 
+The integration tests store a Bamboo home instance in a zip file in [src/test/resources/bamboo-home.zip](src/test/resources/bamboo-home.zip). 
 To start the Bamboo server with the tests configuration run the following command:
 ```shell script
 atlas-debug
@@ -59,7 +59,7 @@ The integration test should include 2 parts:
 1. A job in the tests Bamboo home
 2. Java code in `src/test/java/it/org/jfrog/bamboo/<testname>Test.java`
 
-| Tip: During the development of the test, you'll find yourself changing Java code and start the server again and again - make sure to NOT clean the code (using *atlas-clean*) because it will remove the temporary Bamboo Home environment.
+| Tip: During the development of the test, you'll find yourself changing Java code and start the server over and over again - make sure to NOT clean the code (using *atlas-clean*) because it will remove the temporary Bamboo Home environment.
 | --- |
 
 1. create a new class extending IntegrationTestsBase, in [src/test/java/it/org/jfrog/bamboo](./src/test/java/it/org/jfrog/bamboo) - see current existing tests for reference.
