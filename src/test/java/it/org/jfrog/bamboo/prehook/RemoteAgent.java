@@ -5,6 +5,8 @@ import it.org.jfrog.bamboo.IntegrationTestsBase;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.SystemUtils;
 import org.apache.commons.lang.text.StrSubstitutor;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.jfrog.bamboo.capability.GradleCapabilityHelper;
 import org.jfrog.bamboo.capability.Maven3CapabilityHelper;
 import org.jfrog.build.extractor.executor.CommandExecutor;
@@ -30,6 +32,7 @@ import static it.org.jfrog.bamboo.Utils.MAVEN_HOME;
  * @author yahavi
  */
 public class RemoteAgent {
+    private static final Logger log = LogManager.getLogger(RemoteAgent.class);
 
     private static final Path AGENT_INSTALLER = Paths.get("webapps", "bamboo", "WEB-INF", "classes", "agent-installer.jar");
     private static final String GRADLE_CAPABILITY_KEY = GradleCapabilityHelper.KEY + ".Gradle";
@@ -47,7 +50,7 @@ public class RemoteAgent {
         if (!results.isOk()) {
             throw new IOException("Remote agent failed to start: " + results.getErr());
         }
-        System.out.println("Remote agent started at: " + agentHome.toAbsolutePath().toString());
+        log.info("Remote agent started at: " + agentHome.toAbsolutePath().toString());
 
         // Kill thread before the tomcat process stops
         Runtime.getRuntime().addShutdownHook(new Thread("Stop agent") {
@@ -58,7 +61,7 @@ public class RemoteAgent {
                     if (!results.isOk()) {
                         throw new IOException(results.getErr());
                     }
-                    System.out.println("Remote agent stopped");
+                    log.info("Remote agent stopped");
                 } catch (InterruptedException | IOException e) {
                     throw new RuntimeException("Failed to stop agent", e);
                 }

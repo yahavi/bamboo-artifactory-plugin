@@ -8,6 +8,8 @@ import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
 import com.atlassian.user.impl.DefaultUser;
 import com.jfrog.testing.IntegrationTestsHelper;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.jfrog.build.api.Build;
 import org.junit.After;
 import org.junit.Assert;
@@ -17,7 +19,8 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static it.org.jfrog.bamboo.Utils.*;
+import static it.org.jfrog.bamboo.Utils.createEnv;
+import static it.org.jfrog.bamboo.Utils.createOverrideVars;
 import static org.junit.Assert.*;
 
 /**
@@ -26,6 +29,7 @@ import static org.junit.Assert.*;
  * @author yahavi
  */
 public abstract class IntegrationTestsBase {
+    private static final Logger log = LogManager.getLogger(IntegrationTestsBase.class);
 
     private static final int PLAN_MAX_SECS = 300;
 
@@ -59,7 +63,7 @@ public abstract class IntegrationTestsBase {
         ImmutableChain chain = planManager.getPlanByKey(planKey, Chain.class);
         assertNotNull(chain);
         if (chain.isSuspended()) {
-            System.out.println("Plan '" + this.planKey + "' is suspended - resuming it.");
+            log.warn("Plan '" + this.planKey + "' is suspended - resuming it.");
             planManager.setPlanSuspendedState(planKey, false);
         }
         ExecutionRequestResult result = planExecutionManager.startManualExecution(chain, new DefaultUser("tester"), env, overrideVars);

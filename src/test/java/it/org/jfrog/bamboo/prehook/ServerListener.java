@@ -4,6 +4,10 @@ import com.atlassian.bamboo.event.ServerStartedEvent;
 import com.atlassian.event.api.EventListener;
 import com.jfrog.testing.IntegrationTestsHelper;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import static it.org.jfrog.bamboo.Utils.GRADLE_HOME_ENV;
 import static it.org.jfrog.bamboo.Utils.MAVEN_HOME_ENV;
@@ -17,6 +21,8 @@ import static it.org.jfrog.bamboo.prehook.RepositoriesHandler.createTestReposito
  **/
 public class ServerListener {
 
+    private static final Logger log = LogManager.getLogger(RemoteAgent.class);
+
     /**
      * Run after Tomcat server started with the Bamboo CI.
      *
@@ -26,14 +32,23 @@ public class ServerListener {
     @EventListener
     public void serverStarted(ServerStartedEvent buildStarted) {
         try {
+            initLogger();
             verifyEnvironment();
             createTestRepositories();
             startAgent();
         } catch (Exception e) {
             String msg = "Bamboo Artifactory plugin tests: An error occurred";
-            System.err.println(msg + ": " + ExceptionUtils.getRootCauseMessage(e));
+            log.error(msg + ": " + ExceptionUtils.getRootCauseMessage(e));
             throw new RuntimeException(msg, e);
         }
+    }
+
+    /**
+     * Init logger to get a better output logs from the tests.
+     */
+    private void initLogger() {
+        BasicConfigurator.configure();
+        Logger.getRootLogger().setLevel(Level.INFO);
     }
 
     /**

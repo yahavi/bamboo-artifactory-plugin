@@ -42,6 +42,7 @@ pipelines:
             - source "/root/.sdkman/bin/sdkman-init.sh" && sdk update && sdk install java 8.0.275.hs-adpt
             - git clone https://github.com/yahavi/jfrog-testing-infra.git
             - cd jfrog-testing-infra
+            - git checkout code-review
             - ./gradlew clean build publishToMavenLocal
             - cd $res_bambooGit_resourcePath
             - sh -c 'echo "deb https://packages.atlassian.com/debian/atlassian-sdk-deb/ stable contrib" >>/etc/apt/sources.list'

@@ -334,8 +334,8 @@
         </dependency>
         <dependency>
             <groupId>com.jfrog.testing</groupId>
-            <artifactId>jfrog-testing-utils</artifactId>
-            <version>1.0.x-SNAPSHOT</version>
+            <artifactId>jfrog-testing-infra</artifactId>
+            <version>1.0.0</version>
             <scope>test</scope>
         </dependency>
 
