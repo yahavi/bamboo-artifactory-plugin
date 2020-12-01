@@ -39,13 +39,11 @@ public class RemoteAgent {
     private static final String MAVEN_CAPABILITY_KEY = Maven3CapabilityHelper.KEY + ".Maven";
 
     static void startAgent() throws IOException, InterruptedException {
-        File agentHomeDir = new File("bamboo-agent-home");
-        FileUtils.recursiveDelete(agentHomeDir);
-        Path agentHome = Files.createDirectory(agentHomeDir.toPath());
+        Path agentHome = createAgentHome();
         createAgentWrapperConf(agentHome);
         createCapabilitiesProperties(agentHome);
 
-        final String javaExe = getJavaExe();
+        String javaExe = getJavaExe();
         CommandResults results = runAgent(javaExe, agentHome, "start");
         if (!results.isOk()) {
             throw new IOException("Remote agent failed to start: " + results.getErr());
@@ -53,7 +51,7 @@ public class RemoteAgent {
         log.info("Remote agent started at: " + agentHome.toAbsolutePath().toString());
 
         // Kill thread before the tomcat process stops
-        Runtime.getRuntime().addShutdownHook(new Thread("Stop agent") {
+        Runtime.getRuntime().addShutdownHook(new Thread("Stop Bamboo remote agent") {
             @Override
             public void run() {
                 try {
@@ -70,6 +68,18 @@ public class RemoteAgent {
     }
 
     /**
+     * Create the remote agent home dir.
+     *
+     * @return remote agent home dir path
+     * @throws IOException in case of create directory failed.
+     */
+    private static Path createAgentHome() throws IOException {
+        File agentHomeDir = new File("bamboo-agent-home");
+        FileUtils.recursiveDelete(agentHomeDir);
+        return Files.createDirectory(agentHomeDir.toPath());
+    }
+
+    /**
      * Create the wrapper.conf file of the agent.
      * This file contains agent configuration such as the agent home and the Java heap size.
      *
@@ -80,7 +90,7 @@ public class RemoteAgent {
         StrSubstitutor wrapperConfSubstitutor = new StrSubstitutor(new HashMap<String, String>() {{
             put("BAMBOO_AGENT_HOME", agentHome.toAbsolutePath().toString());
             put("JAVA_INIT_MEMORY_MB", "512");
-            put("JAVA_MAX_MEMORY_MB", "1024");
+            put("JAVA_MAX_MEMORY_MB", "2048");
         }});
         Path agentConfDir = Files.createDirectory(agentHome.resolve("conf"));
         try (InputStream is = IntegrationTestsBase.class.getClassLoader().getResourceAsStream("bamboo-agent-wrapper.conf")) {
