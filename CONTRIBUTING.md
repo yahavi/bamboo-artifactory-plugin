@@ -10,10 +10,13 @@ To build the plugin, please follow these steps:
 ```shell script
 mvn clean package
 ```
-After the build finished, you'll find the bamboo-artifactory-plugin-<version>.jar file in the *target* directory. 
-This jar file can be loaded into Bamboo. 
+After the build finished, you'll find the `bamboo-artifactory-plugin-<version>.jar` file under *target* directory. 
+This jar can be loaded into Bamboo. 
 
 ## Testing the Code
+To run integration tests, the plugin uses the Atlassian Wired tests infrastructure. 
+You can read more about it [here](https://developer.atlassian.com/server/framework/atlassian-sdk/run-wired-tests-with-the-plugin-test-console).
+
 ### Preconditions
 1. [Install the Atlassian SDK](https://developer.atlassian.com/server/framework/atlassian-sdk/install-the-atlassian-sdk-on-a-linux-or-mac-system/).
 For example, to install with Homebrew run:
@@ -29,9 +32,6 @@ brew install atlassian/tap/atlassian-plugin-sdk
 * GRADLE_HOME
 
 ### Running the integration tests
-To run integration tests, the plugin uses the Atlassian Wired tests infrastructure. 
-You can read more about it [here](https://developer.atlassian.com/server/framework/atlassian-sdk/run-wired-tests-with-the-plugin-test-console).
-
 To run the integration tests, execute the following command:
 ```shell script
 atlas-clean && atlas-integration-test
