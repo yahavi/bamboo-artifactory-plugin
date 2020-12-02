@@ -1,6 +1,5 @@
 # Contributing Code to Bamboo Artifactory Plugin
 Before submitting a pull request, please make sure your code is covered by tests.
-Here are instructions for [building](#building-the-code) and [testing](#testing-the-code) the code.
 
 ## Building the Code
 The code is built with Maven and JDK 8.
@@ -14,8 +13,7 @@ After the build finished, you'll find the `bamboo-artifactory-plugin-<version>.j
 This jar can be loaded into Bamboo. 
 
 ## Testing the Code
-To run integration tests, the plugin uses the Atlassian Wired tests infrastructure. 
-You can read more about it [here](https://developer.atlassian.com/server/framework/atlassian-sdk/run-wired-tests-with-the-plugin-test-console).
+To run integration tests, the plugin uses the [Atlassian Wired tests]((https://developer.atlassian.com/server/framework/atlassian-sdk/run-wired-tests-with-the-plugin-test-console)) infrastructure. 
 The tests [inject Bamboo variables](https://www.jfrog.com/confluence/display/JFROG/Bamboo+Artifactory+Plug-in#BambooArtifactoryPlug-in-OverridingPlanvaluesusingBambooVariables) to override Artifactory credentials and repositories. 
 
 ### Preconditions
@@ -40,7 +38,8 @@ atlas-clean && atlas-integration-test
 
 ### Running a single test
 #### Step 1: Start the Bamboo server
-The integration tests store a Bamboo home instance in a zip file in [src/test/resources/bamboo-home.zip](src/test/resources/bamboo-home.zip). 
+The integration tests store a Bamboo home instance in a zip file in [src/test/resources/bamboo-home.zip](src/test/resources/bamboo-home.zip).
+The bamboo home is automatically loaded into the tests environment using `atlas-*` commands.
 To start the Bamboo server with the tests configuration run the following command:
 ```shell script
 atlas-debug
@@ -63,6 +62,7 @@ The integration test should include 2 parts:
 | Tip: During the development of the test, you may change the Java code and start the server over and over again - make sure to not clean the code (using *atlas-clean*) because it will remove the changes you made to the temporary Bamboo Home environment.
 | --- |
 
+#### Steps to create an integration test
 1. Create a new class extending IntegrationTestsBase, in [src/test/java/it/org/jfrog/bamboo](./src/test/java/it/org/jfrog/bamboo) - see current tests for reference.
 2. Start the Bamboo server as instructed in the previous section. Make sure the new test appear in the *Test Console*.
 3. Temporary, configure real Artifactory credentials in: http://localhost:6990/bamboo/admin/jfrogConfig.action
