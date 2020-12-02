@@ -70,4 +70,5 @@ The integration test should include 2 parts:
 The plan must capture the build info, include environment variables and finalized by the Artifactory Publish Build Info task.
 5. Run the test as instructed in the section above.
 6. Once the test passed, restore dummy Artifactory credentials configured in the UI.
-7. Stop the server with ctrl+c and run [./scripts/createBambooHome.sh](./scripts/createBambooHome.sh).
+7. Stop the server by `CTRL+C`. 
+8. Run [./scripts/createBambooHome.sh](./scripts/createBambooHome.sh) to update the tests Bamboo home zip.
