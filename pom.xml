@@ -342,7 +342,7 @@
         <dependency>
             <groupId>com.atlassian.plugins</groupId>
             <artifactId>atlassian-plugins-osgi</artifactId>
-            <version>5.3.6-5f3966a7c</version>
+            <version>5.3.5</version>
             <scope>provided</scope>
         </dependency>
 
@@ -395,11 +395,10 @@
                     <enableQuickReload>true</enableQuickReload>
                     <productDataPath>${basedir}/src/test/resources/bamboo-home.zip</productDataPath>
                     <jvmArgs>-Xms512m -Xmx1024m -server
-                        -Djava.security.egd=file:/dev/./urandom
                         -Datlassian.bamboo.build.disable=true -Datlassian.bamboo.branch.detection.disable=true
                         -Datlassian.bamboo.closed.branch.detection.disable=true
                     </jvmArgs>
-                    <systemPropertyVariables>
+                    <systemPropertyVariables>the active branch
                         <GIT_BRANCH>${git.branch}</GIT_BRANCH>
                     </systemPropertyVariables>
                     <products>
@@ -468,7 +467,7 @@
                 </executions>
             </plugin>
 
-            <!--This plugin Injects the git branch. We use ${git.branch} to run the tests locally on the active branch-->
+            <!--This plugin Injects the git branch. We use ${git.branch} to run the tests locally on the active branch.-->
             <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
@@ -622,14 +621,4 @@
             </plugins>
         </pluginManagement>
     </build>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>net.minidev</groupId>
-                <artifactId>json-smart</artifactId>
-                <version>2.3</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 </project>
