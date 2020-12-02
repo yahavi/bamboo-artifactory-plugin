@@ -394,7 +394,7 @@
                     <productDataVersion>${bamboo.data.version}</productDataVersion>
                     <enableQuickReload>true</enableQuickReload>
                     <productDataPath>${basedir}/src/test/resources/bamboo-home.zip</productDataPath>
-                    <jvmArgs>-Xms256m -Xmx768m -XX:MaxPermSize=768g -XX:-UseGCOverheadLimit -server
+                    <jvmArgs>-Xms256m -Xmx768m -XX:MaxPermSize=768g -server
                         -Djava.security.egd=file:/dev/./urandom
                         -Datlassian.bamboo.build.disable=true -Datlassian.bamboo.branch.detection.disable=true
                         -Datlassian.bamboo.closed.branch.detection.disable=true
