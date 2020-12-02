@@ -75,6 +75,7 @@ public abstract class IntegrationTestsBase {
     @After
     public void tearDown() {
         helper.close();
+        System.gc();
     }
 
     /**
