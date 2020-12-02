@@ -16,6 +16,7 @@ This jar can be loaded into Bamboo.
 ## Testing the Code
 To run integration tests, the plugin uses the Atlassian Wired tests infrastructure. 
 You can read more about it [here](https://developer.atlassian.com/server/framework/atlassian-sdk/run-wired-tests-with-the-plugin-test-console).
+The tests [inject Bamboo variables](https://www.jfrog.com/confluence/display/JFROG/Bamboo+Artifactory+Plug-in#BambooArtifactoryPlug-in-OverridingPlanvaluesusingBambooVariables) to override Artifactory credentials and repositories. 
 
 ### Preconditions
 1. [Install the Atlassian SDK](https://developer.atlassian.com/server/framework/atlassian-sdk/install-the-atlassian-sdk-on-a-linux-or-mac-system/).
@@ -59,14 +60,14 @@ The integration test should include 2 parts:
 1. A job in the tests Bamboo home
 2. Java code in `src/test/java/it/org/jfrog/bamboo/<testname>Test.java`
 
-| Tip: During the development of the test, you'll find yourself changing Java code and start the server over and over again - make sure to NOT clean the code (using *atlas-clean*) because it will remove the temporary Bamboo Home environment.
+| Tip: During the development of the test, you may change the Java code and start the server over and over again - make sure to not clean the code (using *atlas-clean*) because it will remove the changes you made to the temporary Bamboo Home environment.
 | --- |
 
-1. create a new class extending IntegrationTestsBase, in [src/test/java/it/org/jfrog/bamboo](./src/test/java/it/org/jfrog/bamboo) - see current existing tests for reference.
+1. Create a new class extending IntegrationTestsBase, in [src/test/java/it/org/jfrog/bamboo](./src/test/java/it/org/jfrog/bamboo) - see current tests for reference.
 2. Start the Bamboo server as instructed in the previous section. Make sure the new test appear in the *Test Console*.
 3. Temporary, configure real Artifactory credentials in: http://localhost:6990/bamboo/admin/jfrogConfig.action
 4. Create a new plan under *Integration Tests* project. Make sure the plan key is same as in the Java code. 
 The plan must capture the build info, include environment variables and finalized by the Artifactory Publish Build Info task.
 5. Run the test as instructed in the section above.
-6. Once the test passed, change restore fake Artifactory credentials configured in the UI.
+6. Once the test passed, restore dummy Artifactory credentials configured in the UI.
 7. Stop the server with ctrl+c and run [./scripts/createBambooHome.sh](./scripts/createBambooHome.sh).
